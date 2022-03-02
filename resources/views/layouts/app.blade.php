@@ -150,9 +150,13 @@
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i data-feather="power" class="svg-icon mr-2 ml-1"></i>
-                                    Cerrar Sesión</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="dropdown-item" onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                                        <i data-feather="power" class="svg-icon mr-2 ml-1"></i>Cerrar Sesión
+                                    </button>
+                                </form>
                             </div>
                         </li>
                         <!-- ============================================================== -->

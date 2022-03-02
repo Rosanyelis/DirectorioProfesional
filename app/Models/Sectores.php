@@ -24,6 +24,6 @@ class Sectores extends Model
      */
     public function ciudades()
     {
-        return $this->belongsTo(Ciudades::class);
+        return $this->belongsTo(Ciudades::class, 'ciudades_id', 'id');
     }
 }

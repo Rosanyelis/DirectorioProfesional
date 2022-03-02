@@ -19,6 +19,13 @@ class CreateSubcategoriesTable extends Migration
             $table->string('name');
             $table->string('url_imagen');
             $table->timestamps();
+
+            $table->foreign('categorys_id')
+                    ->references('id')
+                    ->on('categorys')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
         });
     }
 

@@ -25,6 +25,6 @@ class Ciudades extends Model
      */
     public function sectores()
     {
-        return $this->hasMany(Sectores::class);
+        return $this->hasMany(Sectores::class,'ciudades_id', 'id');
     }
 }

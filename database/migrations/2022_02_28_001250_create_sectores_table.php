@@ -18,6 +18,12 @@ class CreateSectoresTable extends Migration
             $table->uuid('ciudades_id');
             $table->string('name');
             $table->timestamps();
+
+            $table->foreign('ciudades_id')
+                    ->references('id')
+                    ->on('ciudades')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 
