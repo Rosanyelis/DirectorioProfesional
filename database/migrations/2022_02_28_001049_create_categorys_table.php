@@ -15,9 +15,16 @@ class CreateCategorysTable extends Migration
     {
         Schema::create('categorys', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('sectores_id');
             $table->string('name');
             $table->string('url_imagen');
             $table->timestamps();
+
+            $table->foreign('sectores_id')
+                    ->references('id')
+                    ->on('sectores')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

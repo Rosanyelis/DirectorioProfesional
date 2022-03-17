@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/extra-libs/prism/prism.css') }}">
 @endsection
 @section('content')
     <div class="page-breadcrumb">
@@ -51,6 +52,36 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputDanger1">Imagenes de la Ciudad</label>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 1</label>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 2</label>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 3</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3 justify">
+                                @foreach ($galery as $item)
+                                <div class="col-md-4">
+                                    <h4>Imagen {{ $loop->iteration }}</h4>
+                                    <img class="w-50" src="{{ $item->url_imagen }}" alt="{{ $data->name }}">
+                                    <input type="hidden" name="urls[]" value="{{ $item->url_imagen }}">
+                                </div>
+                                @endforeach
+                            </div>
                             <div class="customize-input float-right">
                                 <button class="btn waves-effect waves-light btn-info">Actualizar</button>
                             </div>
@@ -65,4 +96,5 @@
     <!-- ============================================================== -->
 @endsection
 @section('scripts')
+<script src="{{ asset('assets/extra-libs/prism/prism.js') }}"></script>
 @endsection

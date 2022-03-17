@@ -15,6 +15,7 @@ class SectoresController extends BaseController
         $data = Sectores::where('ciudades_id', $request->id)->get();
         return $this->sendResponse(SectoresResource::collection($data), 'Sectores fetched.');
     }
+
     // /**
     //  * Display a listing of the resource.
     //  *

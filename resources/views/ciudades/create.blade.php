@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Nueva Ciudad</h4>
-                        <form class="mt-3" method="POST"  action="{{ url('ciudades/guardar-ciudad') }}" enctype="multipart/form-data">
+                        <form class=" mt-3"  method="POST"  action="{{ url('ciudades/guardar-ciudad') }}"  enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label class="form-control-label" for="inputDanger1">Nombre de Ciudad</label>
@@ -49,6 +49,27 @@
                                         {{ $errors->first('name') }}
                                     </div>
                                 @endif
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputDanger1">Imagenes de la Ciudad</label>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 1</label>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 2</label>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 3</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="customize-input float-right">
                                 <button class="btn waves-effect waves-light btn-info">Guardar</button>

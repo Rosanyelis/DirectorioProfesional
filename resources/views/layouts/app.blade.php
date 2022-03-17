@@ -220,7 +220,7 @@
     <!--Custom JavaScript -->
     <script src="{{asset('dist/js/custom.min.js')}}"></script>
     <!--This page JavaScript -->
-    <script src="{{asset('dist/js/pages/dashboards/dashboard1.min.js')}}"></script>
+    {{-- <script src="{{asset('dist/js/pages/dashboards/dashboard1.min.js')}}"></script> --}}
 </body>
 
 </html>

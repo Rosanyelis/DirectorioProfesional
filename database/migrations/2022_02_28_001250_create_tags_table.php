@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBusinessGaleriesTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateBusinessGaleriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('business_galeries', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('business_id');
-            $table->string('url_photo')->nullable();
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateBusinessGaleriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('business_galeries');
+        Schema::dropIfExists('tags');
     }
 }

@@ -16,7 +16,7 @@ class Categorys extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id','name', 'url_imagen',
+        'id', 'sectores_id', 'name', 'url_imagen',
     ];
 
     /**
@@ -25,5 +25,13 @@ class Categorys extends Model
     public function subcategories()
     {
         return $this->hasMany(Subcategory::class, 'categorys_id', 'id');
+    }
+
+    /**
+     * Obtiene el sector al que pertenece la subcategoria.
+     */
+    public function sectores()
+    {
+        return $this->belongsTo(Sectores::class, 'sectores_id', 'id');
     }
 }

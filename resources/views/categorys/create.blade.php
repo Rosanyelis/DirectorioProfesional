@@ -40,6 +40,26 @@
                         <h4 class="card-title">Nueva Categoria</h4>
                         <form class="mt-3" method="POST"  action="{{ url('categorias/guardar-categoria') }}" enctype="multipart/form-data">
                             @csrf
+                            <div class="form-group mb-4">
+                                <label for="exampleFormControlSelect1">Ciudad</label>
+                                <select class="form-control @error('ciudades') is-invalid @enderror" name="ciudades_id" id="selectCiudades">
+                                    <option>Seleccione una Ciudad</option>
+                                    @foreach ($data as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="exampleFormControlSelect1">Sectores</label>
+                                <select class="form-control" name="sectores_id" id="selectSectores">
+                                    <option>Seleccione un Sector</option>
+                                </select>
+                                @if ($errors->has('sectores_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('sectores_id') }}
+                                </div>
+                                @endif
+                            </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="inputDanger1">Nombre de Categoria</label>
                                 <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
@@ -78,4 +98,29 @@
     <!-- ============================================================== -->
 @endsection
 @section('scripts')
+<script>
+    $(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#selectCiudades').on('change', function() {
+            let ciudadId = this.value;
+            let baseUrl = '{{ url('sectores') }}/' + ciudadId + '/sectores-por-ciudad';
+            $.ajax({
+                type: "GET",
+                url: baseUrl,
+                success: function(response)
+                {
+                   console.log(response.sectores);
+                    var data = JSON.parse(response.sectores);
+                   $.each(data, function(index,dato){
+                    $("#selectSectores").append('<option value="'+dato.id+'">'+dato.name+'</option>');
+                   });
+                }
+            });
+        });
+    });
+</script>
 @endsection

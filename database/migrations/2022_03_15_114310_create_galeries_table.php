@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubcategoriesTable extends Migration
+class CreateGaleriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateSubcategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('subcategories', function (Blueprint $table) {
+        Schema::create('galeries', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('categorys_id');
-            $table->uuid('sectores_id');
-            $table->string('name');
+            $table->uuid('ciudades_id')->nullable();
+            $table->uuid('sectores_id')->nullable();
+            $table->uuid('business_id')->nullable();
             $table->string('url_imagen');
             $table->timestamps();
 
-            $table->foreign('categorys_id')
+            $table->foreign('ciudades_id')
                     ->references('id')
-                    ->on('categorys')
+                    ->on('ciudades')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
@@ -33,6 +33,11 @@ class CreateSubcategoriesTable extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
+            $table->foreign('business_id')
+                    ->references('id')
+                    ->on('business')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 
@@ -43,6 +48,6 @@ class CreateSubcategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subcategories');
+        Schema::dropIfExists('galeries');
     }
 }

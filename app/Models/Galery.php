@@ -6,29 +6,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UuidModel;
 
-class Subcategory extends Model
-{
-    use HasFactory,UuidModel;
 
-    /**
+class Galery extends Model
+{
+    use HasFactory, UuidModel;
+
+     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', 'categorys_id', 'sectores_id','name', 'url_imagen',
+        'id','ciudades_id', 'sectores_id', 'business_id', 'url_imagen',
     ];
 
     /**
-     * Obtiene la categoria de la subcategoria.
+     * Obtiene la ciudad a la que pertenecen las imagenes.
      */
-    public function categorys()
+    public function ciudades()
     {
-        return $this->belongsTo(Categorys::class, 'categorys_id', 'id');
+        return $this->belongsTo(Ciudades::class, 'ciudades_id', 'id');
     }
 
     /**
-     * Obtiene el sector de la subcategoria.
+     * Obtiene la ciudad a la que pertenecen las imagenes.
      */
     public function sectores()
     {
@@ -36,11 +37,10 @@ class Subcategory extends Model
     }
 
     /**
-     * Obtiene los negocios que pertenecen a la categoria.
+     * Obtiene la ciudad a la que pertenecen las imagenes.
      */
     public function business()
     {
-        return $this->hasMany(Business::class, 'subcategory_id', 'id');
+        return $this->belongsTo(Business::class, 'business_id', 'id');
     }
-
 }

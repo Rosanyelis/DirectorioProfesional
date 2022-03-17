@@ -58,6 +58,15 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="row mb-3 justify">
+                                @foreach ($imagenes as $item)
+                                <div class="col-md-4">
+                                    <h4>Imagen {{ $loop->iteration }}</h4>
+                                    <img class="w-50" src="{{ $item->url_imagen }}" alt="{{ $data->name }}">
+                                    <input type="hidden" name="urls[]" value="{{ $item->url_imagen }}">
+                                </div>
+                                @endforeach
+                            </div>
                         </form>
                     </div>
                 </div>

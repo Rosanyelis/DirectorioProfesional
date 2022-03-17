@@ -6,6 +6,7 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\CiudadesController;
 use App\Http\Controllers\SectoresController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,12 +61,22 @@ Route::get('sectores/{id}/ver-sector', [SectoresController::class, 'show'])->nam
 Route::get('sectores/{id}/editar-sector', [SectoresController::class, 'edit'])->name('sector.edit');
 Route::put('sectores/{id}/actualizar-sector', [SectoresController::class, 'update'])->name('sector.update');
 Route::delete('sectores/{id}/eliminar-sector', [SectoresController::class, 'destroy'])->name('sector.destroy');
+Route::get('sectores/{id}/sectores-por-ciudad', [SectoresController::class, 'sectores'])->name('sector.sectores');
 
 
 Route::get('negocios', [BusinessController::class, 'index'])->name('negocios');
-Route::get('negocios/nueva-negocio', [BusinessController::class, 'create'])->name('negocio.create');
+Route::get('negocios/nuevo-negocio', [BusinessController::class, 'create'])->name('negocio.create');
 Route::post('negocios/guardar-negocio', [BusinessController::class, 'store'])->name('negocio.store');
 Route::get('negocios/{id}/ver-negocio', [BusinessController::class, 'show'])->name('negocio.show');
 Route::get('negocios/{id}/editar-negocio', [BusinessController::class, 'edit'])->name('negocio.edit');
 Route::put('negocios/{id}/actualizar-negocio', [BusinessController::class, 'update'])->name('negocio.update');
 Route::delete('negocios/{id}/eliminar-negocio', [BusinessController::class, 'destroy'])->name('negocio.destroy');
+
+
+Route::get('tags', [TagController::class, 'index'])->name('tags');
+Route::get('tags/nueva-tag', [TagController::class, 'create'])->name('tag.create');
+Route::post('tags/guardar-tag', [TagController::class, 'store'])->name('tag.store');
+Route::get('tags/{id}/ver-tag', [TagController::class, 'show'])->name('tag.show');
+Route::get('tags/{id}/editar-tag', [TagController::class, 'edit'])->name('tag.edit');
+Route::put('tags/{id}/actualizar-tag', [TagController::class, 'update'])->name('tag.update');
+Route::delete('tags/{id}/eliminar-tag', [TagController::class, 'destroy'])->name('tag.destroy');

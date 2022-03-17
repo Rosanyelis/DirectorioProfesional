@@ -11,15 +11,15 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb m-0 p-0">
                             <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Sectores</li>
+                            <li class="breadcrumb-item active">Tags</li>
                         </ol>
                     </nav>
                 </div>
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <a href="{{ url('sectores/nuevo-sector') }}"
-                        class="btn waves-effect waves-light btn-primary">Nuevo Sector</a>
+                    <a href="{{ url('tags/nueva-tag') }}"
+                        class="btn waves-effect waves-light btn-primary">Nueva Tag</a>
                 </div>
             </div>
         </div>
@@ -41,14 +41,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Listado de Sectores</h4>
+                        <h4 class="card-title">Listado de Tags</h4>
                         <div class="table-responsive">
                             <table id="zero_config" class="table table-sm table-striped  no-wrap">
                                 <thead>
                                     <tr>
                                         <th width="5px">#</th>
-                                        <th width="250px">Ciudad</th>
-                                        <th width="250px">Sector</th>
+                                        <th width="500px">Tags</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -56,15 +55,10 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->ciudades->name }}</td>
-                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->description }}</td>
                                             <td>
-                                                <!-- Ver Categoria -->
-                                                <a href="{{ url('sectores/' . $item->id . '/ver-sector') }}"
-                                                    class="btn waves-effect waves-light btn-sm btn-dark"><i
-                                                        class="fas fa-eye"></i></a>
                                                 <!-- Editar Categoria -->
-                                                {{-- <a href="{{ url('sectores/' . $item->id . '/editar-sector') }}"
+                                                {{-- <a href="{{ url('ciudades/' . $item->id . '/editar-ciudad') }}"
                                                     class="btn waves-effect waves-light btn-sm btn-warning"><i
                                                         class="fas fa-pencil-alt"></i></a> --}}
                                                 <!-- Eliminar Categoria -->
@@ -79,7 +73,7 @@
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <form method="POST"
-                                                                action="{{ url('sectores/' . $item->id . '/eliminar-sector') }}">
+                                                                action="{{ url('tags/' . $item->id . '/eliminar-tag') }}">
                                                                 @method('DELETE')
                                                                 @csrf
                                                                 <div class="modal-header modal-colored-header bg-warning">

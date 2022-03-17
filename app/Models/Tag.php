@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UuidModel;
 
-class Ciudades extends Model
+class Tag extends Model
 {
     use HasFactory, UuidModel;
 
@@ -16,23 +16,14 @@ class Ciudades extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id','name',
+        'id','description',
     ];
 
-
     /**
-     * Obtiene los sectores.
+     * Obtiene los negocios relacionados a la etiqueta.
      */
-    public function sectores()
+    public function business()
     {
-        return $this->hasMany(Sectores::class,'ciudades_id', 'id');
-    }
-
-    /**
-     * Obtiene llas imagenes de galeria.
-     */
-    public function galeries()
-    {
-        return $this->hasMany(Galery::class,'ciudades_id', 'id');
+        return $this->morphedByMany(Business::class, 'taggable');
     }
 }

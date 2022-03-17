@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business;
+use App\Models\Galery;
 use Illuminate\Http\Request;
 
-class BusinessController extends Controller
+class GaleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        $data = Business::all();
-        return view('business.index', compact('data'));
+        //
     }
 
     /**
@@ -42,10 +41,10 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\Galery  $galery
      * @return \Illuminate\Http\Response
      */
-    public function show(Business $business)
+    public function show(Galery $galery)
     {
         //
     }
@@ -53,10 +52,10 @@ class BusinessController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\Galery  $galery
      * @return \Illuminate\Http\Response
      */
-    public function edit(Business $business)
+    public function edit(Galery $galery)
     {
         //
     }
@@ -65,10 +64,10 @@ class BusinessController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\Galery  $galery
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Business $business)
+    public function update(Request $request, Galery $galery)
     {
         //
     }
@@ -76,10 +75,10 @@ class BusinessController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\Galery  $galery
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Business $business)
+    public function destroy(Galery $galery)
     {
         //
     }

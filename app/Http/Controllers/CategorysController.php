@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorys;
+use App\Models\Ciudades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -26,7 +27,8 @@ class CategorysController extends Controller
      */
     public function create()
     {
-        return view('categorys.create');
+        $data = Ciudades::all();
+        return view('categorys.create', compact('data'));
     }
 
     /**
@@ -39,15 +41,18 @@ class CategorysController extends Controller
     {
         $request->validate([
             'name' => ['required', 'unique:categorys'],
+            'sectores_id' => ['required'],
             'url_imagen' => ['required']
         ],
         [
             'name.required' => 'El campo Nombre es obligatorio',
             'name.unique' => 'El valor del campo Nombre ya existe',
+            'sectores_id.required' => 'El campo Sector es obligatorio',
             'url_imagen.required' => 'El valor del campo Imagen de Categoría es obligatorio',
         ]);
 
         $registro = new Categorys();
+        $registro->sectores_id = $request->sectores_id;
         $registro->name = $request->name;
         if ($request->hasFile('url_imagen')) {
             $uploadPath = public_path('/storage/categorias/');

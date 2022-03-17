@@ -10,14 +10,14 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb m-0 p-0">
                             <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Categorias</li>
+                            <li class="breadcrumb-item active">Tags</li>
                         </ol>
                     </nav>
                 </div>
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <a href="{{ url('categorias') }}" class="btn waves-effect waves-light btn-dark">Regresar</a>
+                    <a href="{{ url('tags') }}" class="btn waves-effect waves-light btn-dark">Regresar</a>
                 </div>
             </div>
         </div>
@@ -37,24 +37,21 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Ver Categoria</h4>
-                        <form class="mt-3">
+                        <h4 class="card-title">Nueva Tag</h4>
+                        <form class=" mt-3"  method="POST"  action="{{ url('tags/guardar-tag') }}" >
                             @csrf
                             <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Ciudad</label>
-                                <input type="text" class="form-control" name="name" readonly value="{{ $data->sectores->ciudades->name }}" id="inputDanger1">
+                                <label class="form-control-label" for="inputDanger1">Nombre de Tag</label>
+                                <input type="text" class="form-control  @error('description') is-invalid @enderror" name="description"
+                                    placeholder="ejemplo: pizzas" value="{{ old('description') }}" id="inputDanger1">
+                                @if ($errors->has('description'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('description') }}
+                                    </div>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Sector</label>
-                                <input type="text" class="form-control" name="name" readonly value="{{ $data->sectores->name }}" id="inputDanger1">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Nombre de Categoria</label>
-                                <input type="text" class="form-control" name="name" readonly value="{{ $data->name }}" id="inputDanger1">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Imagen de Categoria</label>
-                                <img src="{{ $data->url_imagen }}" alt="{{ $data->name }}">
+                            <div class="customize-input float-right">
+                                <button class="btn waves-effect waves-light btn-info">Guardar</button>
                             </div>
                         </form>
                     </div>

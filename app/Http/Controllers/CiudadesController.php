@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ciudades;
+use App\Models\Galery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CiudadesController extends Controller
 {
@@ -48,6 +50,26 @@ class CiudadesController extends Controller
         $registro->name = $request->name;
         $registro->save();
 
+        $ciudad_id = $registro->id;
+
+        if ($request->hasFile('imagenes')) {
+            foreach ($request->imagenes as $imagen) {
+                $record = new Galery();
+                $record->ciudades_id = $ciudad_id;
+
+                $uploadPath = public_path('/storage/ciudades/');
+                $file = $imagen;
+                $extension = $file->getClientOriginalExtension();
+                $uuid = Str::uuid(4);
+                $fileName = $uuid . '.' . $extension;
+                $file->move($uploadPath, $fileName);
+                $url = asset('/storage/ciudades/'.$fileName);
+                $record->url_imagen = $url;
+                $record->save();
+            }
+        }
+
+
         return redirect('ciudades')->with('success', 'Registro Guardado exitosamente');
     }
 
@@ -73,7 +95,8 @@ class CiudadesController extends Controller
         $count = Ciudades::where('id', $id)->count();
         if ($count>0) {
             $data = Ciudades::where('id', $id)->first();
-            return view('ciudades.edit', compact('data'));
+            $galery = Galery::where('ciudades_id', $id)->get();
+            return view('ciudades.edit', compact('data', 'galery'));
         } else {
             return redirect('/ciudades')->with('danger', 'Problemas para Mostrar el Registro.');
         }
@@ -89,10 +112,9 @@ class CiudadesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'unique:categorys'],
+            'name' => ['required'],
         ],
         [
-            'name.required' => 'El campo Nombre es obligatorio',
             'name.unique' => 'El valor del campo Nombre ya existe',
         ]);
 
@@ -101,6 +123,23 @@ class CiudadesController extends Controller
             $registro = Ciudades::where('id', $id)->first();
             $registro->name = $request->name;
             $registro->save();
+
+            if ($request->hasFile('imagenes')) {
+                foreach ($request->imagenes as $imagen) {
+                    $record = Galery::where('ciudades_id', $id)->first();
+                    $uploadPath = public_path('/storage/ciudades/');
+                    $file = $imagen;
+                    $extension = $file->getClientOriginalExtension();
+                    $uuid = Str::uuid(4);
+                    $fileName = $uuid . '.' . $extension;
+                    $file->move($uploadPath, $fileName);
+                    $url = asset('/storage/ciudades/'.$fileName);
+                    $record->url_imagen = $url;
+                    $record->save();
+
+                }
+            }
+
             return redirect('/ciudades')->with('success', 'Registro Actualizado Exitosamente!');
         } else {
             return redirect('/ciudades')->with('danger', 'Problemas para Actualizar el Registro.');
@@ -118,6 +157,7 @@ class CiudadesController extends Controller
         $count = Ciudades::where('id', $id)->count();
         if ($count>0) {
             Ciudades::where('id', $id)->delete();
+            Galery::where('ciudades_id', $id)->delete();
             return redirect('/ciudades')->with('success', 'Registro Eliminado Exitosamente!');
         } else {
             return redirect('/ciudades')->with('danger', 'Problemas para Eliminar el Registro.');

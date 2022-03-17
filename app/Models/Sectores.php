@@ -26,4 +26,28 @@ class Sectores extends Model
     {
         return $this->belongsTo(Ciudades::class, 'ciudades_id', 'id');
     }
+
+    /**
+     * Obtiene las subcategorias que pertenecen al sector.
+     */
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class, 'sectores_id', 'id');
+    }
+
+    /**
+     * Obtiene las imagenes de galeria.
+     */
+    public function galeries()
+    {
+        return $this->hasMany(Galery::class,'sectores_id', 'id');
+    }
+
+    /**
+     * Obtiene los negocios que pertenecen al sector.
+     */
+    public function business()
+    {
+        return $this->hasMany(Business::class, 'sectores_id', 'id');
+    }
 }

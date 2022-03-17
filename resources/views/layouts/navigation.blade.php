@@ -15,7 +15,7 @@
                 <li class="nav-small-cap"><span class="hide-menu">MÓDULOS</span></li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="javascript:void()" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ url('negocios') }}" aria-expanded="false">
                         <i class="fas fa-building"></i>
                         <span class="hide-menu">Negocios</span>
                     </a>
@@ -44,6 +44,11 @@
                         <li class="sidebar-item">
                             <a href="{{ url('subcategorias') }}" class="sidebar-link">
                                 <span class="hide-menu"> Subcategorias</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ url('tags') }}" class="sidebar-link">
+                                <span class="hide-menu"> Tags</span>
                             </a>
                         </li>
                     </ul>

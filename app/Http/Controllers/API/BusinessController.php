@@ -1,85 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Apis;
+namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Models\Business;
+use App\Http\Controllers\API\BaseController;
+use App\Http\Resources\Business as BusinessResource;
 use Illuminate\Http\Request;
+use Validator;
 
-class BusinessController extends Controller
+class BusinessController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    // url para generar abrir el archivo de catalago
+
+    // url para mostrar los negocios que tienen la subcategoria y el sector seleccionado
+    public function index(Request $request)
     {
-        //
+        $data = Business::where('subcategory_id',  $request->subcategoryid)
+                        ->where('sectores_id', $request->sectorid)
+                        ->get();
+        return $this->sendResponse(BusinessResource::collection($data), 'Sectores fetched.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -58,9 +58,9 @@
                                             <td>{{ $item->name }}</td>
                                             <td>
                                                 <!-- Editar Categoria -->
-                                                <a href="{{ url('ciudades/' . $item->id . '/editar-ciudad') }}"
+                                                {{-- <a href="{{ url('ciudades/' . $item->id . '/editar-ciudad') }}"
                                                     class="btn waves-effect waves-light btn-sm btn-warning"><i
-                                                        class="fas fa-pencil-alt"></i></a>
+                                                        class="fas fa-pencil-alt"></i></a> --}}
                                                 <!-- Eliminar Categoria -->
                                                 <button type="button" class="btn waves-effect waves-light btn-sm btn-danger"
                                                     data-toggle="modal"

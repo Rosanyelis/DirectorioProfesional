@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubcategoriesTable extends Migration
+class CreateTaggablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,23 @@ class CreateSubcategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('subcategories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('categorys_id');
-            $table->uuid('sectores_id');
-            $table->string('name');
-            $table->string('url_imagen');
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->uuid('business_id');
+            $table->uuid('tags_id');
             $table->timestamps();
 
-            $table->foreign('categorys_id')
+            $table->foreign('business_id')
                     ->references('id')
-                    ->on('categorys')
+                    ->on('business')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
-            $table->foreign('sectores_id')
+            $table->foreign('tags_id')
                     ->references('id')
-                    ->on('sectores')
+                    ->on('tags')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-
         });
     }
 
@@ -43,6 +40,6 @@ class CreateSubcategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subcategories');
+        Schema::dropIfExists('taggables');
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Ciudades;
 use App\Models\Sectores;
+use App\Models\Galery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SectoresController extends Controller
 {
@@ -52,6 +54,24 @@ class SectoresController extends Controller
         $registro->name = $request->name;
         $registro->save();
 
+        $sectores_id = $registro->id;
+
+        if ($request->hasFile('imagenes')) {
+            foreach ($request->imagenes as $imagen) {
+                $record = new Galery();
+                $record->sectores_id = $sectores_id;
+                    $uploadPath = public_path('/storage/sectores/');
+                    $file = $imagen;
+                    $extension = $file->getClientOriginalExtension();
+                    $uuid = Str::uuid(4);
+                    $fileName = $uuid . '.' . $extension;
+                    $file->move($uploadPath, $fileName);
+                    $url = asset('/storage/sectores/'.$fileName);
+                $record->url_imagen = $url;
+                $record->save();
+            }
+        }
+
         return redirect('sectores')->with('success', 'Registro Guardado exitosamente');
     }
 
@@ -66,7 +86,8 @@ class SectoresController extends Controller
         $count = Sectores::where('id', $id)->count();
         if ($count>0) {
             $data = Sectores::where('id', $id)->first();
-            return view('sectores.show', compact('data'));
+            $imagenes = Galery::where('sectores_id', $id)->get();
+            return view('sectores.show', compact('data', 'imagenes'));
         } else {
             return redirect('/sectores')->with('danger', 'Problemas para Mostrar el Registro.');
         }
@@ -131,9 +152,17 @@ class SectoresController extends Controller
         $count = Sectores::where('id', $id)->count();
         if ($count>0) {
             Sectores::where('id', $id)->delete();
+            Galery::where('sectores_id', $id)->delete();
             return redirect('/sectores')->with('success', 'Registro Eliminado Exitosamente!');
         } else {
             return redirect('/sectores')->with('danger', 'Problemas para Eliminar el Registro.');
         }
+    }
+
+    public function sectores(Request $request, $id){
+
+        $data['sectores'] = Sectores::where('ciudades_id', $id)->get()->toJson();
+
+        return response()->json($data);
     }
 }

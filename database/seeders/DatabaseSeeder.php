@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'), // password
             'remember_token' => Str::random(10),
         ]);
+        $this->call([
+            CiudadesSeeder::class,
+            TagSeeder::class,
+        ]);
         // \App\Models\User::factory(10)->create();
     }
 }
