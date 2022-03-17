@@ -6,6 +6,7 @@ use App\Models\Categorys;
 use App\Models\Ciudades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class CategorysController extends Controller
 {

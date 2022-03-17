@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorys;
+use App\Models\Ciudades;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class SubcategoryController extends Controller
 {
@@ -28,7 +30,8 @@ class SubcategoryController extends Controller
     public function create()
     {
         $data = Categorys::all();
-        return view('subcategories.create', compact('data'));
+        $ciudades = Ciudades::all();
+        return view('subcategories.create', compact('data', 'ciudades'));
     }
 
     /**
@@ -41,6 +44,7 @@ class SubcategoryController extends Controller
     {
         $request->validate([
             'categorys_id' => ['required'],
+            'sectores_id' => ['required'],
             'name' => ['required', 'unique:categorys'],
             'url_imagen' => ['required']
         ],
@@ -49,10 +53,12 @@ class SubcategoryController extends Controller
             'name.unique' => 'El valor del campo Nombre ya existe',
             'url_imagen.required' => 'El valor del campo Imagen de Categoría es obligatorio',
             'categorys_id.required' => 'El valor del campo Categoría es obligatorio',
+            'categorys_id.required' => 'El valor del campo Sector es obligatorio',
         ]);
 
         $registro = new Subcategory();
         $registro->categorys_id = $request->categorys_id;
+        $registro->sectores_id = $request->sectores_id;
         $registro->name = $request->name;
         if ($request->hasFile('url_imagen')) {
             $uploadPath = public_path('/storage/subcategorias/');
@@ -128,6 +134,7 @@ class SubcategoryController extends Controller
         if ($count>0) {
             $registro = Subcategory::where('id', $id)->first();
             $registro->categorys_id = $request->categorys_id;
+            $registro->sectores_id = $request->sectores_id;
             $registro->name = $request->name;
             if ($request->hasFile('url_imagen')) {
                 $uploadPath = public_path('/storage/subcategorias/');
@@ -161,5 +168,12 @@ class SubcategoryController extends Controller
         } else {
             return redirect('/subcategorias')->with('danger', 'Problemas para Eliminar el Registro.');
         }
+    }
+
+    public function subcategorias(Request $request, $id){
+
+        $data['subcategorias'] = Subcategory::where('categorys_id', $id)->get()->toJson();
+
+        return response()->json($data);
     }
 }

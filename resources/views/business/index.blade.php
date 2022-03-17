@@ -11,14 +11,14 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb m-0 p-0">
                             <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Categorias</li>
+                            <li class="breadcrumb-item active">Negocios</li>
                         </ol>
                     </nav>
                 </div>
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <a href="{{ url('categorias/nueva-categoria') }}" class="btn waves-effect waves-light btn-primary">Nueva Categoria</a>
+                    <a href="{{ url('negocios/nuevo-negocio') }}" class="btn waves-effect waves-light btn-primary">Nuevo Negocio</a>
                 </div>
             </div>
         </div>
@@ -38,13 +38,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Listado de Categorias</h4>
+                        <h4 class="card-title">Listado de Negocios</h4>
                         <div class="table-responsive">
                             <table id="zero_config" class="table table-sm table-striped  no-wrap">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Categoria</th>
+                                        <th scope="col">Negocio</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>

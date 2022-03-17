@@ -7,6 +7,7 @@ use App\Models\Sectores;
 use App\Models\Galery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class SectoresController extends Controller
 {

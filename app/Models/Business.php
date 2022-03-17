@@ -10,6 +10,8 @@ class Business extends Model
 {
     use HasFactory, UuidModel;
 
+    protected $table = 'business';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,7 +20,7 @@ class Business extends Model
     protected $fillable = [
         'id','subcategory_id', 'sectores_id', 'name', 'description', 'url_logo',
         'sitio_web', 'phone', 'email', 'delivery', 'direccion', 'url_catalogo',
-        'url_business', 'url_instagram', 'url_facebook',
+         'url_instagram', 'url_facebook',
     ];
 
     /**

@@ -80,6 +80,26 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="form-group mb-4">
+                                <label for="exampleFormControlSelect1">Ciudad</label>
+                                <select class="form-control @error('ciudades') is-invalid @enderror" name="ciudades_id" id="selectCiudades">
+                                    <option>Seleccione una Ciudad</option>
+                                    @foreach ($ciudades as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="exampleFormControlSelect1">Sectores</label>
+                                <select class="form-control" name="sectores_id" id="selectSectores">
+                                    <option>Seleccione un Sector</option>
+                                </select>
+                                @if ($errors->has('sectores_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('sectores_id') }}
+                                </div>
+                                @endif
+                            </div>
                             <div class="customize-input float-right">
                                 <button class="btn waves-effect waves-light btn-info">Guardar</button>
                             </div>
@@ -94,4 +114,30 @@
     <!-- ============================================================== -->
 @endsection
 @section('scripts')
+<script>
+    $(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#selectCiudades').on('change', function() {
+            let ciudadId = this.value;
+            let baseUrl = '{{ url('sectores') }}/' + ciudadId + '/sectores-por-ciudad';
+            $.ajax({
+                type: "GET",
+                url: baseUrl,
+                success: function(response)
+                {
+                   console.log(response.sectores);
+                    var data = JSON.parse(response.sectores);
+                   $.each(data, function(index,dato){
+                    $("#selectSectores").append('<option value="'+dato.id+'">'+dato.name+'</option>');
+                   });
+                }
+            });
+        });
+
+    });
+</script>
 @endsection

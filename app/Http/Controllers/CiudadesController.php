@@ -6,6 +6,7 @@ use App\Models\Ciudades;
 use App\Models\Galery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class CiudadesController extends Controller
 {

@@ -43,7 +43,7 @@ Route::get('subcategorias/{id}/ver-subcategoria', [SubcategoryController::class,
 Route::get('subcategorias/{id}/editar-subcategoria', [SubcategoryController::class, 'edit'])->name('subcategoria.edit');
 Route::put('subcategorias/{id}/actualizar-subcategoria', [SubcategoryController::class, 'update'])->name('subcategoria.update');
 Route::delete('subcategorias/{id}/eliminar-subcategoria', [SubcategoryController::class, 'destroy'])->name('subcategoria.destroy');
-
+Route::get('subcategorias/{id}/subcategorias-por-categoria', [SubcategoryController::class, 'subcategorias'])->name('sector.subcategorias');
 
 Route::get('ciudades', [CiudadesController::class, 'index'])->name('ciudades');
 Route::get('ciudades/nueva-ciudad', [CiudadesController::class, 'create'])->name('ciudad.create');
