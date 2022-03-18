@@ -38,4 +38,4 @@ Route::get('negocios/{id}/catalogo', [BusinessController::class, 'downloadcatalo
 
 Route::get('galeria-de-imagenes-de-ciudad/{id}', [GaleryController::class, 'indexciudad']);
 Route::get('galeria-de-imagenes-de-sector/{id}', [GaleryController::class, 'indexsector']);
-Route::get('galeria-de-imagenes-de-sector/{id}', [GaleryController::class, 'indexbusiness']);
+Route::get('galeria-de-imagenes-de-negocios/{id}', [GaleryController::class, 'indexbusiness']);
