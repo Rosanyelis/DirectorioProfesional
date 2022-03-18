@@ -33,6 +33,7 @@ Route::get('ciudades', [CiudadesController::class, 'index']);
 Route::get('sectores/{id}', [SectoresController::class, 'index']);
 
 Route::get('negocios/{subcategoryid}/{sectorid}', [BusinessController::class, 'index']);
+Route::get('negocios/{id}/catalogo', [BusinessController::class, 'downloadcatalogo']);
 
 
 Route::get('galeria-de-imagenes-de-ciudad/{id}', [GaleryController::class, 'indexciudad']);

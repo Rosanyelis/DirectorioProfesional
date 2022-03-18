@@ -30,6 +30,7 @@
     <!-- Container fluid  -->
     <!-- ============================================================== -->
     <div class="container-fluid">
+        @include('layouts.alerts')
         <!-- *************************************************************** -->
         <!-- Start First Cards -->
         <!-- *************************************************************** -->
@@ -53,7 +54,52 @@
                                     <tr>
                                         <td scope="row">{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td scope="row"></td>
+                                        <td scope="row">
+                                            <!-- Ver Categoria -->
+                                            <a href="{{ url('negocios/' . $item->id . '/ver-negocio') }}"
+                                                class="btn waves-effect waves-light btn-sm btn-dark"><i
+                                                    class="fas fa-eye"></i></a>
+
+                                            <button type="button" class="btn waves-effect waves-light btn-sm btn-danger"
+                                            data-toggle="modal"
+                                            data-target="#warning-header-modal-{{ $item->id }}"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                                <!-- Warning Alert Modal -->
+                                                <div id="warning-header-modal-{{ $item->id }}" class="modal fade"
+                                                    tabindex="-1" role="dialog" aria-labelledby="warning-header-modalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form method="POST"
+                                                                action="{{ url('negocios/' . $item->id . '/eliminar-negocio') }}">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <div class="modal-header modal-colored-header bg-warning">
+                                                                    <h4 class="modal-title"
+                                                                        id="warning-header-modalLabel">
+                                                                        Alerta
+                                                                    </h4>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-hidden="true">×</button>
+                                                                </div>
+                                                                <div class="modal-body text-center">
+                                                                    <h1 class=""><i
+                                                                            class="fas fa-exclamation-triangle text-warning"></i>
+                                                                    </h1>
+                                                                    <h3 class="mt-1">¿Está Seguro de Eliminar el
+                                                                        Registro?</h5>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-light"
+                                                                        data-dismiss="modal">Cerrar</button>
+                                                                    <button type="submit" class="btn btn-warning">Si, Estoy
+                                                                        Seguro</button>
+                                                                </div>
+                                                            </form>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

@@ -137,9 +137,21 @@ class BusinessController extends Controller
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function show(Business $business)
+    public function show($id)
     {
-
+        $count = Business::where('id', $id)->count();
+        if ($count>0) {
+            $data = Business::where('id', $id)->first();
+            $imagenes = Galery::where('business_id', $id)->get();
+            $tags = DB::table('tags')
+                        ->join('taggables', 'tags.id', '=', 'taggables.tags_id')
+                        ->join('business', 'taggables.business_id', '=', 'business.id')
+                        ->select('tags.description')
+                        ->get();
+            return view('business.show', compact('data', 'imagenes', 'tags'));
+        } else {
+            return redirect('/negocios')->with('danger', 'Problemas para Mostrar el Registro.');
+        }
     }
 
     /**
@@ -171,8 +183,16 @@ class BusinessController extends Controller
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Business $business)
+    public function destroy($id)
     {
-        //
+        $count = Business::where('id', $id)->count();
+        if ($count>0) {
+            Business::where('id', $id)->delete();
+            Galery::where('business_id', $id)->delete();
+            Taggables::where('business_id', $id)->delete();
+            return redirect('/negocios')->with('success', 'Registro Eliminado Exitosamente!');
+        } else {
+            return redirect('/negocios')->with('danger', 'Problemas para Eliminar el Registro.');
+        }
     }
 }
