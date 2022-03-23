@@ -20,8 +20,17 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'apellido',
         'email',
+        'edad',
+        'sexo',
+        'dni',
         'password',
+        'rol',
+        'ciudad_id',
+        'sector_id',
+        'direccion',
+
     ];
 
     /**
@@ -42,4 +51,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function ciudades()
+    {
+        return $this->belongsTo(Ciudades::class, 'ciudad_id', 'id');
+    }
+
+    public function sectores()
+    {
+        return $this->belongsTo(Sectores::class, 'sector_id', 'id');
+    }
 }

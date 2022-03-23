@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use App\Models\Categorys;
+use App\Models\Subcategory;
 use App\Models\Ciudades;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\Galery;
 use App\Models\Taggables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException; 
 
 class BusinessController extends Controller
 {
@@ -34,8 +37,9 @@ class BusinessController extends Controller
     {
         $categorias = Categorys::all();
         $ciudades = Ciudades::all();
+        $subcategory = Subcategory::all();
         $tags = Tag::all();
-        return view('business.create',compact('categorias', 'ciudades', 'tags'));
+        return view('business.create',compact('categorias', 'ciudades', 'tags', 'subcategory'));
     }
 
     /**
@@ -48,12 +52,16 @@ class BusinessController extends Controller
     {
         $request->validate([
             'subcategory_id' => ['required'],
+            'categorias_id' => ['required'],
             'sectores_id' => ['required'],
             'name' => ['required'],
             'description' => ['required'],
             'phone' => ['required'],
             'delivery' => ['required'],
             'direccion' => ['required'],
+            'user' => ['required'],
+            'ciudades_id' => ['required'],
+            'sectores_id' => ['required'],
         ],
         [
             'name.required' => 'El campo Nombre es obligatorio',
@@ -63,7 +71,14 @@ class BusinessController extends Controller
             'phone.required' => 'El campo Teléfono es obligatorio',
             'delivery.required' => 'El campo Delivery es obligatorio',
             'direccion.required' => 'El campo Direccion es obligatorio',
+            'user' => 'El campo Correo Propietario es obligatorio',
         ]);
+        
+        $user = User::where('email', '=',$request->user)->where('rol', '=','USER')->get();
+  
+        if($user->isEmpty()){
+            throw ValidationException::withMessages(['user' => 'El correo no Existe a un usuario']); 
+        };
 
         $registro = new Business();
         $registro->subcategory_id = $request->subcategory_id;
@@ -79,6 +94,8 @@ class BusinessController extends Controller
             $file->move($uploadPath, $fileName);
             $url = asset('/storage/negocios/'.$registro->name.'/'.$fileName);
             $registro->url_logo = $url;
+        }else{
+            $registro->url_logo = '';
         }
         $registro->sitio_web = $request->sitio_web;
         $registro->phone = $request->phone;
@@ -87,6 +104,7 @@ class BusinessController extends Controller
         $registro->direccion = $request->direccion;
         $registro->url_instagram = $request->url_instagram;
         $registro->url_facebook = $request->url_facebook;
+        $registro->user_id = $user[0]->id;
         if ($request->hasFile('url_catalogo')) {
             $uploadPath = public_path('/storage/negocios/'.$registro->name);
             $file = $request->file('url_catalogo');
@@ -96,6 +114,8 @@ class BusinessController extends Controller
             $file->move($uploadPath, $fileName);
             $url = asset('/storage/negocios/'.$registro->name.'/'.$fileName);
             $registro->url_catalogo = $url;
+        }else{
+            $registro->url_catalogo = '';
         }
 
         $registro->save();

@@ -19,7 +19,7 @@ class Business extends Model
      */
     protected $fillable = [
         'id','subcategory_id', 'sectores_id', 'name', 'description', 'url_logo',
-        'sitio_web', 'phone', 'email', 'delivery', 'direccion', 'url_catalogo',
+        'sitio_web', 'phone', 'email', 'delivery', 'user_id', 'direccion', 'url_catalogo',
          'url_instagram', 'url_facebook',
     ];
 
@@ -45,6 +45,14 @@ class Business extends Model
     public function sectores()
     {
         return $this->belongsTo(Sectores::class, 'sectores_id', 'id');
+    }
+
+       /**
+     * Obtiene el sector de la subcategoria.
+     */
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\CiudadesController;
 use App\Http\Controllers\SectoresController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\TagController;
 
 /*
@@ -26,6 +27,15 @@ require __DIR__.'/auth.php';
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+# Users
+Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+Route::get('/users/crear-usuario', [UsersController::class, 'create'])->name('users.create');
+Route::post('/users/guardar-usuario', [UsersController::class, 'store'])->name('users.store');
+Route::get('/users/{id}/editar-usuario', [UsersController::class, 'show'])->name('users.edit');
+Route::put('/users/{id}/actualizar-usuario', [UsersController::class, 'edit'])->name('users.update');
+Route::get('/users/{id}/ver-usuario', [UsersController::class, 'update'])->name('users.show');
+Route::delete('/users/{id}/borrar-usuario', [UsersController::class, 'destroy'])->name('users.destroy');
 
 
 Route::get('categorias', [CategorysController::class, 'index'])->name('categorias');
