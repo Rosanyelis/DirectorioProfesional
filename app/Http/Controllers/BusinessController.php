@@ -13,7 +13,7 @@ use App\Models\Taggables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException; 
+use Illuminate\Validation\ValidationException;
 
 class BusinessController extends Controller
 {
@@ -50,35 +50,38 @@ class BusinessController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'subcategory_id' => ['required'],
-            'categorias_id' => ['required'],
-            'sectores_id' => ['required'],
+            'subcategory_id' => ['required', 'uuid'],
+            'categorias_id' => ['required', 'uuid'],
+            'sectores_id' => ['required', 'uuid'],
             'name' => ['required'],
             'description' => ['required'],
             'phone' => ['required'],
             'delivery' => ['required'],
             'direccion' => ['required'],
-            'user' => ['required'],
-            'ciudades_id' => ['required'],
-            'sectores_id' => ['required'],
+            'email' => ['unique:business'],
+            'ciudades_id' => ['required', 'uuid'],
+            'sectores_id' => ['required', 'uuid'],
         ],
         [
             'name.required' => 'El campo Nombre es obligatorio',
+            'categorias_id.required' => 'El campo Categoria es obligatorio',
+            'categorias_id.uuid' => 'El campo Categoria es obligatorio',
             'sectores_id.required' => 'El campo Sector es obligatorio',
+            'sectores_id.uuid' => 'El campo Sector es obligatorio',
             'subcategory_id.required' => 'El campo Subcategoria es obligatorio',
+            'subcategory_id.uuid' => 'El campo Subcategoria es obligatorio',
             'description.required' => 'El campo Descripción del Negocio es obligatorio',
             'phone.required' => 'El campo Teléfono es obligatorio',
             'delivery.required' => 'El campo Delivery es obligatorio',
             'direccion.required' => 'El campo Direccion es obligatorio',
-            'user' => 'El campo Correo Propietario es obligatorio',
+            'ciudades_id.required' => 'El campo Ciudad es obligatorio',
+            'ciudades_id.uuid' => 'El campo Ciudad es obligatorio',
+            'sectores_id.required' => 'El campo Sector es obligatorio',
+            'sectores_id.uuid' => 'El campo Sector es obligatorio',
+            'email.unique' => 'El Correo ingresado ya existe',
         ]);
-        
-        $user = User::where('email', '=',$request->user)->where('rol', '=','USER')->get();
-  
-        if($user->isEmpty()){
-            throw ValidationException::withMessages(['user' => 'El correo no Existe a un usuario']); 
-        };
 
         $registro = new Business();
         $registro->subcategory_id = $request->subcategory_id;
@@ -95,16 +98,13 @@ class BusinessController extends Controller
             $url = asset('/storage/negocios/'.$registro->name.'/'.$fileName);
             $registro->url_logo = $url;
         }else{
-            $registro->url_logo = '';
+            $registro->url_logo = null;
         }
         $registro->sitio_web = $request->sitio_web;
         $registro->phone = $request->phone;
         $registro->email = $request->email;
         $registro->delivery = $request->delivery;
         $registro->direccion = $request->direccion;
-        $registro->url_instagram = $request->url_instagram;
-        $registro->url_facebook = $request->url_facebook;
-        $registro->user_id = $user[0]->id;
         if ($request->hasFile('url_catalogo')) {
             $uploadPath = public_path('/storage/negocios/'.$registro->name);
             $file = $request->file('url_catalogo');
@@ -115,37 +115,20 @@ class BusinessController extends Controller
             $url = asset('/storage/negocios/'.$registro->name.'/'.$fileName);
             $registro->url_catalogo = $url;
         }else{
-            $registro->url_catalogo = '';
+            $registro->url_catalogo = null;
         }
-
         $registro->save();
 
         $business_id = $registro->id;
 
-        if ($request->hasFile('imagenes')) {
-            foreach ($request->imagenes as $imagen) {
-                $record = new Galery();
-                $record->business_id = $business_id;
-                    $uploadPath = public_path('/storage/sectores/');
-                    $file = $imagen;
-                    $extension = $file->getClientOriginalExtension();
-                    $uuid = Str::uuid(4);
-                    $fileName = $uuid . '.' . $extension;
-                    $file->move($uploadPath, $fileName);
-                    $url = asset('/storage/sectores/'.$fileName);
-                $record->url_imagen = $url;
-                $record->save();
-            }
-        }
 
-        if ($request->input('tags')) {
+        if ($request->has('tags')) {
             foreach ($request->tags as $tag) {
                 $record = new Taggables();
                 $record->business_id = $business_id;
                 $record->tags_id = $tag;
                 $record->save();
             }
-
         }
 
         return redirect('negocios')->with('success', 'Registro Guardado exitosamente');
@@ -167,6 +150,7 @@ class BusinessController extends Controller
                         ->join('taggables', 'tags.id', '=', 'taggables.tags_id')
                         ->join('business', 'taggables.business_id', '=', 'business.id')
                         ->select('tags.description')
+                        ->where('taggables.business_id', $id)
                         ->get();
             return view('business.show', compact('data', 'imagenes', 'tags'));
         } else {

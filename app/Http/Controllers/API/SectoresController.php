@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Sectores;
 use App\Http\Controllers\API\BaseController;
-use App\Http\Resources\Sectores as SectoresResource;
+use App\Http\Resources\SectoresResource;
 use Illuminate\Http\Request;
 use Validator;
 

@@ -43,22 +43,27 @@
                             @csrf
                             <div class="form-group mb-4">
                                 <label for="exampleFormControlSelect1">Categoria</label>
-                                <select class="form-control @error('categorias') is-invalid @enderror" name="categorias_id" id="selectCategorias">
+                                <select class="form-control @error('categorias_id') is-invalid @enderror" name="categorias_id" id="selectCategorias">
                                     <option>Seleccione una Categoria</option>
                                     @foreach ($categorias as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}" @if ($item->id == old('categorias_id')) selected @else @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
+                                @if ($errors->has('categorias_id'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('categorias_id') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group mb-4">
                                 <label for="exampleFormControlSelect1">Subcategoria</label>
-                                <select class="form-control" name="subcategory_id" id="selectSubcategory">
+                                <select class="form-control @error('subcategory_id') is-invalid @enderror" name="subcategory_id" id="selectSubcategory">
                                     <option>Seleccione un Subcategoria</option>
                                 </select>
                                 @if ($errors->has('subcategory_id'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('subcategory_id') }}
-                                </div>
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('subcategory_id') }}
+                                    </div>
                                 @endif
                             </div>
                             <div class="form-group">
@@ -86,7 +91,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Descripción o Quienes Somos del Negocio</label>
+                                <label class="form-control-label" for="inputDanger1">Información del Negocio</label>
                                 <textarea type="text" class="form-control  @error('description') is-invalid @enderror" name="description"
                                     placeholder="ejemplo: pizzas" id="inputDanger1">{{ old('description') }}</textarea>
                                 @if ($errors->has('description'))
@@ -97,16 +102,21 @@
                             </div>
                             <div class="form-group mb-4">
                                 <label for="exampleFormControlSelect1">Ciudad</label>
-                                <select class="form-control @error('ciudades') is-invalid @enderror" name="ciudades_id" id="selectCiudades">
+                                <select class="form-control @error('ciudades_id') is-invalid @enderror" name="ciudades_id" id="selectCiudades">
                                     <option>Seleccione una Ciudad</option>
                                     @foreach ($ciudades as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}" @if ($item->id == old('ciudades_id')) selected @else @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
+                                @if ($errors->has('ciudades_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('ciudades_id') }}
+                                </div>
+                                @endif
                             </div>
                             <div class="form-group mb-4">
                                 <label for="exampleFormControlSelect1">Sectores</label>
-                                <select class="form-control" name="sectores_id" id="selectSectores">
+                                <select class="form-control @error('sectores_id') is-invalid @enderror" name="sectores_id" id="selectSectores">
                                     <option>Seleccione un Sector</option>
                                 </select>
                                 @if ($errors->has('sectores_id'))
@@ -161,11 +171,16 @@
                             </div>
                             <div class="form-group mb-4">
                                 <label for="exampleFormControlSelect1">¿Tiene Delivery?</label>
-                                <select class="form-control @error('categorias') is-invalid @enderror" name="delivery">
+                                <select class="form-control @error('delivery') is-invalid @enderror" name="delivery">
                                     <option>Seleccione</option>
-                                    <option value="1">Si</option>
-                                    <option value="0">No</option>
+                                    <option value="1" @if (1 == old('delivery')) selected @else @endif>Si</option>
+                                    <option value="0" @if (0 == old('delivery')) selected @else @endif>No</option>
                                 </select>
+                                @if ($errors->has('delivery'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('delivery') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="inputDanger1">Sitio Web</label>
@@ -178,53 +193,12 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Instagram</label>
-                                <input type="text" class="form-control  @error('url_instagram') is-invalid @enderror" name="url_instagram"
-                                    placeholder="ejemplo: pizzas" value="{{ old('url_instagram') }}" id="inputDanger1">
-                                @if ($errors->has('url_instagram'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('url_instagram') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Facebook</label>
-                                <input type="text" class="form-control  @error('url_facebook') is-invalid @enderror" name="url_facebook"
-                                    placeholder="ejemplo: pizzas" value="{{ old('url_facebook') }}" id="inputDanger1">
-                                @if ($errors->has('url_facebook'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('url_facebook') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="form-group">
                                 <label>Tags</label>
                                 <select class="js-example-basic-multiple js-states form-control" style="width: 100%" name="tags[]" multiple="multiple">
                                     @foreach ($tags as $item)
                                         <option value="{{ $item->id }}">{{ $item->description }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Imagenes de la Negocio</label>
-                                <div class="input-group mb-3">
-                                    <div class="custom-file">
-                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 1</label>
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="custom-file">
-                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 2</label>
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="custom-file">
-                                        <input type="file" name="imagenes[]" class="form-control custom-file-input @error('url_imagen') is-invalid @enderror" id="inputGroupFile01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Seleccione imagen 3</label>
-                                    </div>
-                                </div>
                             </div>
                             <div class="customize-input float-right">
                                 <button class="btn waves-effect waves-light btn-info">Guardar</button>
@@ -276,11 +250,12 @@
                 url: baseUrl,
                 success: function(response)
                 {
-                   console.log(response.subcategorias);
+                //    console.log(response.subcategorias);
                     var data = JSON.parse(response.subcategorias);
-                   $.each(data, function(index,dato){
-                    $("#selectSubcategory").append('<option value="'+dato.id+'">'+dato.name+'</option>');
-                   });
+                    $('#selectSubcategory').children('option:not(:first)').remove();
+                    $.each(data, function(index,dato){
+                        $("#selectSubcategory").append('<option value="'+dato.id+'">'+dato.name+'</option>');
+                    });
                 }
             });
         });

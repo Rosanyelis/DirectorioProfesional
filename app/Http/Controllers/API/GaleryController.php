@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Galery;
 use App\Http\Controllers\API\BaseController;
-use App\Http\Resources\Galery as GaleryResource;
+use App\Http\Resources\GaleryResource;
 use Illuminate\Http\Request;
 use Validator;
 

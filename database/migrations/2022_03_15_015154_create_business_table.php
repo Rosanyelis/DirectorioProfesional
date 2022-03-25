@@ -19,15 +19,14 @@ class CreateBusinessTable extends Migration
             $table->uuid('sectores_id');
             $table->string('name');
             $table->string('description');
-            $table->string('url_logo');
-            $table->string('sitio_web')->nullable();;
+            $table->string('url_logo')->nullable();
+            $table->string('sitio_web')->nullable();
             $table->string('phone');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->boolean('delivery');
             $table->string('direccion');
-            $table->string('url_catalogo')->nullable();;
-            $table->string('url_instagram')->nullable();
-            $table->string('url_facebook')->nullable();
+            $table->string('url_catalogo')->nullable();
+            $table->string('horario_atencio');
             $table->timestamps();
 
 

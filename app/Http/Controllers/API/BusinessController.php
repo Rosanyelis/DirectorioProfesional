@@ -4,7 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Business;
 use App\Http\Controllers\API\BaseController;
-use App\Http\Resources\Business as BusinessResource;
+use App\Http\Resources\BusinessResource;
+use App\Http\Resources\NegocioResource;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\Storage;
@@ -24,9 +25,15 @@ class BusinessController extends BaseController
     public function index(Request $request)
     {
         $data = Business::where('subcategory_id',  $request->subcategoryid)
-                        ->where('sectores_id', $request->sectorid)
+                        ->select(['id', 'name', 'url_logo', 'delivery'])
                         ->get();
         return $this->sendResponse(BusinessResource::collection($data), 'negocios fetched.');
+    }
+
+    public function negocio(Request $request)
+    {
+        $data = Business::where('id',  $request->id)->get();
+        return $this->sendResponse(NegocioResource::collection($data), 'negocio fetched.');
     }
 
 

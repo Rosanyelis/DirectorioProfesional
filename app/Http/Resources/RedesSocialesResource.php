@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Galery extends JsonResource
+class RedesSocialesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,12 @@ class Galery extends JsonResource
      */
     public function toArray($request)
     {
+        // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'ciudades_id' => $this->ciudades_id,
-            'sectores_id' => $this->sectores_id,
             'business_id' => $this->business_id,
-            'url_imagen' => $this->url_imagen,
+            'red_social' => $this->red_social,
+            'redsocial_url' => $this->redsocial_url,
             'created_at' => $this->created_at->format('m/d/Y'),
             'updated_at' => $this->updated_at->format('m/d/Y'),
         ];

@@ -8,6 +8,9 @@ use App\Http\Controllers\SectoresController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\RedSocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +76,13 @@ Route::put('sectores/{id}/actualizar-sector', [SectoresController::class, 'updat
 Route::delete('sectores/{id}/eliminar-sector', [SectoresController::class, 'destroy'])->name('sector.destroy');
 Route::get('sectores/{id}/sectores-por-ciudad', [SectoresController::class, 'sectores'])->name('sector.sectores');
 
+Route::get('tags', [TagController::class, 'index'])->name('tags');
+Route::get('tags/nueva-tag', [TagController::class, 'create'])->name('tag.create');
+Route::post('tags/guardar-tag', [TagController::class, 'store'])->name('tag.store');
+Route::get('tags/{id}/ver-tag', [TagController::class, 'show'])->name('tag.show');
+Route::get('tags/{id}/editar-tag', [TagController::class, 'edit'])->name('tag.edit');
+Route::put('tags/{id}/actualizar-tag', [TagController::class, 'update'])->name('tag.update');
+Route::delete('tags/{id}/eliminar-tag', [TagController::class, 'destroy'])->name('tag.destroy');
 
 Route::get('negocios', [BusinessController::class, 'index'])->name('negocios');
 Route::get('negocios/nuevo-negocio', [BusinessController::class, 'create'])->name('negocio.create');
@@ -83,10 +93,21 @@ Route::put('negocios/{id}/actualizar-negocio', [BusinessController::class, 'upda
 Route::delete('negocios/{id}/eliminar-negocio', [BusinessController::class, 'destroy'])->name('negocio.destroy');
 
 
-Route::get('tags', [TagController::class, 'index'])->name('tags');
-Route::get('tags/nueva-tag', [TagController::class, 'create'])->name('tag.create');
-Route::post('tags/guardar-tag', [TagController::class, 'store'])->name('tag.store');
-Route::get('tags/{id}/ver-tag', [TagController::class, 'show'])->name('tag.show');
-Route::get('tags/{id}/editar-tag', [TagController::class, 'edit'])->name('tag.edit');
-Route::put('tags/{id}/actualizar-tag', [TagController::class, 'update'])->name('tag.update');
-Route::delete('tags/{id}/eliminar-tag', [TagController::class, 'destroy'])->name('tag.destroy');
+Route::get('negocios/{id}/productos', [ProductoController::class, 'index'])->name('producto.index');
+Route::get('negocios/{id}/productos/nuevo-producto', [ProductoController::class, 'create'])->name('producto.create');
+Route::post('negocios/{id}/productos/guardar-producto', [ProductoController::class, 'store'])->name('producto.store');
+Route::get('negocios/{id}/productos/{idproducto}/ver-producto', [ProductoController::class, 'show'])->name('producto.show');
+Route::delete('negocios/{id}/productos/{idproducto}/eliminar-producto', [ProductoController::class, 'destroy'])->name('producto.destroy');
+
+Route::get('negocios/{id}/servicios', [ServicioController::class, 'index'])->name('servicio.index');
+Route::get('negocios/{id}/servicios/nuevo-servicio', [ServicioController::class, 'create'])->name('servicio.create');
+Route::post('negocios/{id}/servicios/guardar-servicio', [ServicioController::class, 'store'])->name('servicio.store');
+Route::get('negocios/{id}/servicios/{idservicio}/ver-servicio', [ServicioController::class, 'show'])->name('servicio.show');
+Route::delete('negocios/{id}/servicios/{idservicio}/eliminar-servicio', [ServicioController::class, 'destroy'])->name('servicio.destroy');
+
+Route::get('negocios/{id}/redes', [RedSocialController::class, 'index'])->name('red.index');
+Route::get('negocios/{id}/redes/nueva-red', [RedSocialController::class, 'create'])->name('red.create');
+Route::post('negocios/{id}/redes/guardar-red', [RedSocialController::class, 'store'])->name('red.store');
+Route::get('negocios/{id}/redes/{idred}/ver-red', [RedSocialController::class, 'show'])->name('red.show');
+Route::delete('negocios/{id}/redes/eliminar-red', [RedSocialController::class, 'destroy'])->name('red.destroy');
+

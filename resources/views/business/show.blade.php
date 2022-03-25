@@ -93,14 +93,6 @@
                                 <input type="text" class="form-control" name="name" readonly value="{{ $data->sitio_web }}" id="inputDanger1">
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Instagram</label>
-                                <input type="text" class="form-control" name="name" readonly value="{{ $data->url_instagram }}" id="inputDanger1">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Facebook</label>
-                                <input type="text" class="form-control" name="name" readonly value="{{ $data->url_facebook }}" id="inputDanger1">
-                            </div>
-                            <div class="form-group">
                                 <label class="form-control-label" for="inputDanger1">Tags</label>
                                 <ul>
                                     @foreach ($tags as $item)
@@ -108,19 +100,6 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="inputDanger1">Imagenes del Negocio</label>
-                                <div class="row mb-3 justify">
-                                    @foreach ($imagenes as $item)
-                                    <div class="col-md-4">
-                                        <h4>Imagen {{ $loop->iteration }}</h4>
-                                        <img class="w-50" src="{{ $item->url_imagen }}" alt="{{ $data->name }}">
-                                        <input type="hidden" name="urls[]" value="{{ $item->url_imagen }}">
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
                         </form>
                     </div>
                 </div>

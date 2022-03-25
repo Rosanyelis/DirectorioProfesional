@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CategorysController;
+use App\Http\Controllers\API\SubcategoryController;
 use App\Http\Controllers\API\CiudadesController;
 use App\Http\Controllers\API\SectoresController;
 use App\Http\Controllers\API\GaleryController;
@@ -25,15 +26,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Route::resource('categorias', CategorysController::class);
-
-Route::get('categorias', [CategorysController::class, 'index']);
-
+# Lista las ciudades
 Route::get('ciudades', [CiudadesController::class, 'index']);
-
+# Lista los sectores segun el id de la ciudad
 Route::get('sectores/{id}', [SectoresController::class, 'index']);
+# Lista los categorias segun el id del sector
+Route::get('categorias/{id}', [CategorysController::class, 'index']);
+# Lista las subcategorias segun el id de la categoria
+Route::get('subcategorias/{id}', [SubcategoryController::class, 'index']);
+# Lista los negocios segun la subcategoria
+Route::get('negocios/{subcategoryid}', [BusinessController::class, 'index']);
+# Muestra la informacion del negocio segun el id suministrado
+Route::get('data-negocio/{id}', [BusinessController::class, 'negocio']);
 
-Route::get('negocios/{subcategoryid}/{sectorid}', [BusinessController::class, 'index']);
-Route::get('negocios/{id}/catalogo', [BusinessController::class, 'downloadcatalogo']);
 
 
 Route::get('galeria-de-imagenes-de-ciudad/{id}', [GaleryController::class, 'indexciudad']);

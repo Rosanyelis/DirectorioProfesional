@@ -20,7 +20,6 @@ class Business extends Model
     protected $fillable = [
         'id','subcategory_id', 'sectores_id', 'name', 'description', 'url_logo',
         'sitio_web', 'phone', 'email', 'delivery', 'user_id', 'direccion', 'url_catalogo',
-         'url_instagram', 'url_facebook',
     ];
 
     /**
@@ -61,5 +60,29 @@ class Business extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Obtiene las redes sociales
+     */
+    public function redes()
+    {
+        return $this->hasMany(RedSocial::class,'business_id', 'id');
+    }
+
+    /**
+     * Obtiene las productos
+     */
+    public function productos()
+    {
+        return $this->hasMany(Producto::class,'business_id', 'id');
+    }
+
+    /**
+     * Obtiene las servicios
+     */
+    public function servicios()
+    {
+        return $this->hasMany(Servicio::class,'business_id', 'id');
     }
 }
